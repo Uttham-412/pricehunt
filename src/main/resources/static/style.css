@@ -1,0 +1,170 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+/* Container */
+.container {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  width: 90%;
+  max-width: 900px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.8s ease-out;
+}
+
+/* Title */
+.title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin: 0;
+  color: #333;
+}
+
+.subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* Search box */
+.search-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  width: 70%;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: #0073e6;
+  box-shadow: 0 0 6px rgba(0, 115, 230, 0.5);
+  outline: none;
+}
+
+.search-box button {
+  padding: 12px 20px;
+  background: #0073e6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.search-box button:hover:not(:disabled) {
+  background: #005bb5;
+  transform: translateY(-2px);
+}
+
+.search-box button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* Table */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background: #0073e6;
+  color: white;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+}
+
+tbody tr {
+  background: #fafafa;
+  transition: background 0.3s;
+}
+
+tbody tr:nth-child(even) {
+  background: #f0f4f9;
+}
+
+tbody tr:hover {
+  background: #e6f0ff;
+}
+
+/* Table links */
+td a {
+  color: #0073e6;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+td a:hover {
+  color: #005bb5;
+  text-decoration: underline;
+}
+
+/* States */
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}
+
+.empty {
+  text-align: center;
+  padding: 20px;
+  color: #555;
+}
+
+.error {
+  text-align: center;
+  padding: 20px;
+  color: red;
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PriceHunt</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    
+    <h1 class="title">🛒 PriceHunt</h1>
+    <p class="subtitle">Compare prices across websites instantly</p>
+
+    <div class="search-box">
+      <input type="text" id="searchBox" placeholder="Enter product name...">
+      <button id="searchButton">Search</button>
+    </div>
+
+    <div class="table-container">
+      
+      <table id="results">
+        <thead>
+
+
+          <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Website</th>
+            <th>Link</th>
+          </tr>
+
+
+        </thead>
+        <tbody>
+          <!-- Results will appear here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchBox = document.getElementById("searchBox");
+      const searchButton = document.getElementById("searchButton");
+
+      const searchProduct = async () => {
+        const tableBody = document.querySelector("#results tbody");
+
+        const query = searchBox.value.trim();
+
+        if (!query) {
+
+          return; // Don't search if the input is empty
+        }
+
+
+        // Loading state
+        searchButton.disabled = true;
+        searchButton.textContent = "🔎 Searching...";
+
+        tableBody.innerHTML = '<tr><td colspan="6" class="loading">Loading...</td></tr>';
+
+
+
+
+
+        try {
+          const res = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          const data = await res.json();
+
+          tableBody.innerHTML = ""; // Clear loading message
+
+
+          if (data.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="6" class="empty">No results found.</td></tr>';
+            return;
+          }
+
+          data.forEach(p => {
+            const row = tableBody.insertRow();
+
+            row.classList.add("fade-in");
+
+            // Image
+            const imageCell = row.insertCell(0);
+            const image = document.createElement("img");
+            image.src = p.image || 'placeholder.png'; // Use a placeholder if no image
+            image.alt = p.title;
+            image.classList.add("product-image");
+            imageCell.appendChild(image);
+
+            // Use textContent for security (prevents XSS)
+            row.insertCell(1).textContent = p.title || "";
+            row.insertCell(2).textContent = p.price || "";
+            row.insertCell(3).textContent = p.rating || "";
+            row.insertCell(4).textContent = p.source || "";
+
+            const linkCell = row.insertCell(5);
+            const link = document.createElement("a");
+
+
+
+
+            link.href = p.link;
+            link.textContent = "View";
+            link.target = "_blank";
+            link.rel = "noopener noreferrer"; // Security best practice for target="_blank"
+            linkCell.appendChild(link);
+          });
+        } catch (err) {
+          console.error("Failed to fetch results:", err);
+          tableBody.innerHTML = '<tr><td colspan="6" class="error">⚠️ Failed to fetch results</td></tr>';
+        } finally {
+          searchButton.disabled = false;
+          searchButton.textContent = "Search";
+        }
+
+      };
+
+      searchButton.addEventListener("click", searchProduct);
+      searchBox.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          searchProduct();
+        }
+      });
+    });
+  </script>
+
+</body>
+
+
+
+
+</html>

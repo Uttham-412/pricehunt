@@ -1,0 +1,4 @@
+com\pricehunt\Product.class
+com\pricehunt\SearchController.class
+com\pricehunt\SerpApiService.class
+com\pricehunt\PricehuntApplication.class
