@@ -69,4 +69,3 @@ Once the server is running, you can make requests to the API.
 `GET /api/v1/product?url=<PRODUCT_URL>`
 
 Where `<PRODUCT_URL>` is the URL-encoded link to the product page you want to scrape.
-
